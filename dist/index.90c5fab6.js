@@ -584,7 +584,31 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"hYrgI":[function(require,module,exports) {
-//Interface med code, name, progression, syllabus 
+window.onload = init;
+//Sidan hämtar information från LocalStorage vid start 
+function init() {}
+//spara och hämta infromation från local storage | setItem och getItem 
+function saveCourse() {}
+//Funktion för att lägga till kurs | Både LocalStorage och Kurslistan
+function addNewCourse() {
+    //hämta element för formuläret
+    let courseFormEl = document.getElementById("courseForm");
+    //hämta dom element för input
+    let courseCodeEl = document.getElementById("courseCode");
+    let courseNameEl = document.getElementById("courseName");
+    let courseProgressionEl = document.querySelector('input[name="courseProgression"]:checked');
+    let courseSyllabusEl = document.getElementById("courseSyllabus");
+    let newCourse = {
+        code: courseCodeEl.value,
+        name: courseNameEl.value,
+        progression: courseProgressionEl.value,
+        syllabus: courseSyllabusEl.value
+    };
+    //localStorage.setItem(newCourse) //kan inte ta emot newCourse...
+    printCourse(newCourse);
+}
+//skriver ut kurser till DOM
+function printCourse(course) {} //Uppdatera information om befintlig kurs | Både LocalStorage och Kurslistan 
 
 },{}]},["3L0Bc","hYrgI"], "hYrgI", "parcelRequirefa22")
 

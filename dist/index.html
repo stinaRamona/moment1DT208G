@@ -8,7 +8,8 @@
 </head>
 <body>
     <h1>Hantera kurser här:</h1>
-    <form>
+
+    <form id="courseForm">
         <label for="courseCode">Kurskod</label><br>
         <input type="text" name="courseCode" id="courseCode"><br>
         
@@ -19,10 +20,16 @@
         <input type="radio" id="A" name="courseProgression" value="A">
         <label for="A">A</label><br>
         <input type="radio" id="B" name="courseProgression" value="B">
-        <label for="b">B</label><br>
+        <label for="B">B</label><br>
         <input type="radio" id="C" name="courseProgression" value="C">
         <label for="C">C</label>
 
+        <label for="courseSyllabus">Kursplan (URL)</label>
+        <input type="text" name="courseSyllabus" id="courseSyllabus">
+
+        <button type="submit">Lägg till kurs</button>
     </form>
+
+    <div id="courseList"></div>
 </body>
 </html>
