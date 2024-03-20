@@ -584,6 +584,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"hYrgI":[function(require,module,exports) {
+//Interface med code, name, progression, syllabus 
 
 },{}]},["3L0Bc","hYrgI"], "hYrgI", "parcelRequirefa22")
 
