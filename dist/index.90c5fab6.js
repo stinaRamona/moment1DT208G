@@ -584,15 +584,27 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"hYrgI":[function(require,module,exports) {
-window.onload = init;
+/*
+window.onload = init; 
 //Sidan hämtar information från LocalStorage vid start 
-function init() {}
+function init(){
+
+}
+*/ //Interface med code, name, progression, syllabus 
+/*
 //spara och hämta infromation från local storage | setItem och getItem 
-function saveCourse() {}
+function getCourseInfo(){
+
+}
+*/ //Element och eventlyssnare för att skicka formuläret och skriva ut 
+let submitBtnEl = document.getElementById("submit");
+let courseListEl = document.getElementById("courseList");
+submitBtnEl.addEventListener("click", function(event) {
+    event.preventDefault(); //ser till att inte sidan laddas om
+    addNewCourse();
+});
 //Funktion för att lägga till kurs | Både LocalStorage och Kurslistan
 function addNewCourse() {
-    //hämta element för formuläret
-    let courseFormEl = document.getElementById("courseForm");
     //hämta dom element för input
     let courseCodeEl = document.getElementById("courseCode");
     let courseNameEl = document.getElementById("courseName");
@@ -608,7 +620,16 @@ function addNewCourse() {
     printCourse(newCourse);
 }
 //skriver ut kurser till DOM
-function printCourse(course) {} //Uppdatera information om befintlig kurs | Både LocalStorage och Kurslistan 
+function printCourse(course) {
+    let courseInfo = document.createElement("article");
+    courseInfo.innerHTML = `
+    <p>Kurskod: ${course.code}</p>
+    <p>Kursnamn: ${course.name}</p>
+    <p>Progression: ${course.progression}</p>
+    <p>Kursplan: <a href=${course.syllabus}>Kursplan</a>
+    `;
+    courseListEl.appendChild(courseInfo);
+} //Uppdatera information om befintlig kurs | Både LocalStorage och Kurslistan 
 
 },{}]},["3L0Bc","hYrgI"], "hYrgI", "parcelRequirefa22")
 
