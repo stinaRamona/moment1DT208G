@@ -588,16 +588,16 @@ window.onload = init;
 //Sidan hämtar information från LocalStorage vid start 
 function init() {
     //hämta information från local storage
-    let storedCourse = localStorage.getItem("course");
-    if (storedCourse != null) printCourse(JSON.parse(storedCourse));
-//Fungerar, men skriver bara ut det senaste av de tillagda kurserna.  
+    let storedCourses = localStorage.getItem("courses");
+    //om det finns kurser så loopas de igenom och skickas till printCourse som skriver ut 
+    if (storedCourses) {
+        let courses = JSON.parse(storedCourses);
+        courses.forEach((course)=>{
+            printCourse(course);
+        });
+    }
 }
-/*
-//spara och hämta infromation från local storage | setItem och getItem 
-function getCourseInfo(){
-
-}
-*/ //Element och eventlyssnare för att skicka formuläret och skriva ut 
+//Element och eventlyssnare för att skicka formuläret och skriva ut 
 let submitBtnEl = document.getElementById("submit");
 let courseListEl = document.getElementById("courseList");
 submitBtnEl.addEventListener("click", function(event) {
@@ -617,13 +617,14 @@ function addNewCourse() {
         progression: courseProgressionEl.value,
         syllabus: courseSyllabusEl.value
     };
-    //Skapar array som newCourse läggs in i för att läggas in i local storage  
-    let courseArr = [];
-    courseArr.push(newCourse);
-    courseArr.forEach((course)=>{
-        localStorage.setItem("course", JSON.stringify(course)); //lägger till kursen till local storage
-    });
-    //localStorage.setItem("course", JSON.stringify(newCourse)); //lägger till kursen till local storage
+    //laddar sparade kurser från local storage
+    let storedCourses = localStorage.getItem("courses");
+    let courses = [];
+    //om det finns kurser sparade laddas de in i arrayen 
+    if (storedCourses) courses = JSON.parse(storedCourses);
+    courses.push(newCourse);
+    // Spara arrayen med alla kurser till local storage
+    localStorage.setItem("courses", JSON.stringify(courses));
     printCourse(newCourse);
 }
 //skriver ut kurser till DOM
