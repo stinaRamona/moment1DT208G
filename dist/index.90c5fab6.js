@@ -584,13 +584,14 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"hYrgI":[function(require,module,exports) {
-/*
-window.onload = init; 
+window.onload = init;
 //Sidan hämtar information från LocalStorage vid start 
-function init(){
-
+function init() {
+    //hämta information från local storage
+    let storedCourse = localStorage.getItem("course");
+    if (storedCourse != null) printCourse(JSON.parse(storedCourse));
+//Fungerar, men skriver bara ut det senaste av de tillagda kurserna.  
 }
-*/ //Interface med code, name, progression, syllabus 
 /*
 //spara och hämta infromation från local storage | setItem och getItem 
 function getCourseInfo(){
@@ -616,19 +617,25 @@ function addNewCourse() {
         progression: courseProgressionEl.value,
         syllabus: courseSyllabusEl.value
     };
-    //localStorage.setItem(newCourse) //kan inte ta emot newCourse...
+    //Skapar array som newCourse läggs in i för att läggas in i local storage  
+    let courseArr = [];
+    courseArr.push(newCourse);
+    courseArr.forEach((course)=>{
+        localStorage.setItem("course", JSON.stringify(course)); //lägger till kursen till local storage
+    });
+    //localStorage.setItem("course", JSON.stringify(newCourse)); //lägger till kursen till local storage
     printCourse(newCourse);
 }
 //skriver ut kurser till DOM
 function printCourse(course) {
-    let courseInfo = document.createElement("article");
-    courseInfo.innerHTML = `
+    let courseInfoEl = document.createElement("article");
+    courseInfoEl.innerHTML = `
     <p>Kurskod: ${course.code}</p>
     <p>Kursnamn: ${course.name}</p>
     <p>Progression: ${course.progression}</p>
     <p>Kursplan: <a href=${course.syllabus}>Kursplan</a>
     `;
-    courseListEl.appendChild(courseInfo);
+    courseListEl.appendChild(courseInfoEl);
 } //Uppdatera information om befintlig kurs | Både LocalStorage och Kurslistan 
 
 },{}]},["3L0Bc","hYrgI"], "hYrgI", "parcelRequirefa22")

@@ -1,16 +1,23 @@
-/*
+
 window.onload = init; 
 //Sidan hämtar information från LocalStorage vid start 
 function init(){
+    //hämta information från local storage
+    let storedCourse = localStorage.getItem("course"); 
+
+    if(storedCourse != null){
+    printCourse(JSON.parse(storedCourse)); 
+    }
+//Fungerar, men skriver bara ut det senaste av de tillagda kurserna.  
 
 }
-*/
+
 //Interface med code, name, progression, syllabus 
 
 interface courseInfo {
     code: string; 
     name: string; 
-    progression: string; // kanske boolean på denna pga det bara finns tre alternativ?  
+    progression: string;   
     syllabus: string; 
 }
 
@@ -46,7 +53,14 @@ function addNewCourse() {
         syllabus: courseSyllabusEl.value,
     } 
 
-    //localStorage.setItem(newCourse) //kan inte ta emot newCourse...
+    //Skapar array som newCourse läggs in i för att läggas in i local storage  
+    let courseArr: any = []; 
+    courseArr.push(newCourse); 
+
+    courseArr.forEach(course => {
+        localStorage.setItem("course", JSON.stringify(course)); //lägger till kursen till local storage
+    });
+    //localStorage.setItem("course", JSON.stringify(newCourse)); //lägger till kursen till local storage
 
     printCourse(newCourse); 
 
@@ -55,16 +69,16 @@ function addNewCourse() {
 //skriver ut kurser till DOM
 function printCourse(course: courseInfo): void{ 
     
-    let courseInfo = document.createElement("article"); 
+    let courseInfoEl = document.createElement("article"); 
 
-    courseInfo.innerHTML = `
+    courseInfoEl.innerHTML = `
     <p>Kurskod: ${course.code}</p>
     <p>Kursnamn: ${course.name}</p>
     <p>Progression: ${course.progression}</p>
     <p>Kursplan: <a href=${course.syllabus}>Kursplan</a>
     `; 
 
-    courseListEl.appendChild(courseInfo); 
+    courseListEl.appendChild(courseInfoEl); 
 
 }
 
