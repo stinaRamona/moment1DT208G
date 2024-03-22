@@ -72,15 +72,13 @@ function printCourse(course: courseInfo): void{
     let courseInfoEl = document.createElement("article"); 
 
     courseInfoEl.innerHTML = `
-    <p>Kurskod: ${course.code}</p>
-    <p>Kursnamn: ${course.name}</p>
-    <p>Progression: ${course.progression}</p>
-    <p>Kursplan: <a href=${course.syllabus}>Kursplan</a>
+    <p>Kurskod: <span contenteditable="true">${course.code}</span></p>
+    <p>Kursnamn: <span contenteditable="true">${course.name}</span></p>
+    <p>Progression: <span contenteditable="true">${course.progression}</span></p>
+    <p>Kursplan: <a contenteditable="true" href=${course.syllabus}>${course.syllabus}</a>
     `; 
 
     courseListEl.appendChild(courseInfoEl); 
 
-}
-
-//Uppdatera information om befintlig kurs | Både LocalStorage och Kurslistan 
+} 
  
