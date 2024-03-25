@@ -93,13 +93,33 @@ function printCourse(course: courseInfo): void{
     /*Värdena som skrivs ut är ändringsbara med contenteditable. Med oninput så kallas 
     på en function som heter update courses. Där sparas ändringar till local storage */
 
-    courseInfoEl.innerHTML = `
-    <p>Kurskod: <span contenteditable="true" oninput="updateCourse(this, 'code')">${course.code}</span></p>
-    <p>Kursnamn: <span contenteditable="true" oninput="updateCourse(this, 'name')">${course.name}</span></p>
-    <p>Progression: <span contenteditable="true" oninput="updateCourse(this, 'progression')">${course.progression}</span></p>
-    <p>Kursplan: <a contenteditable="true" href=${course.syllabus} oninput="updateCourse(this, 'syllabus')">${course.syllabus}</a>
-    <br>
-    <br>`; 
+    let codeSpan = document.createElement("span");
+    codeSpan.contentEditable = "true";
+    codeSpan.textContent = "Kurskod:" + course.code;
+    codeSpan.addEventListener("input", function() {
+        updateCourse(this, 'code');
+    }); 
+
+    let nameSpan = document.createElement("span"); 
+    nameSpan.contentEditable = "true"; 
+    nameSpan.textContent= "Namn:" + course.name;
+    nameSpan.addEventListener("input", function() {
+        updateCourse(this, 'name'); 
+    })
+
+    let progressSpan = document.createElement("span"); 
+    progressSpan.contentEditable = "true"; 
+    progressSpan.textContent = "Progression: " + course.progression; 
+    progressSpan.addEventListener("input", function() {
+        updateCourse(this, 'progression'); 
+    }) 
+
+    let syllabusSpan = document.createElement("span"); 
+    syllabusSpan.contentEditable = "true"; 
+    syllabusSpan.textContent = "Kursplan: " + course.syllabus; 
+    syllabusSpan.addEventListener("input", function() {
+        updateCourse(this, 'syllabus'); 
+    })
 
     //Ska bara kunna ändra till A, B eller C 
     if(course.progression === "A" || course.progression === "B" || course.progression === "C") {
@@ -107,6 +127,11 @@ function printCourse(course: courseInfo): void{
     } else {
         errorMessage.innerHTML = "Var vänlig skriv i en giltig progression (A, B eller C)";
     }
+
+    courseInfoEl.appendChild(codeSpan); 
+    courseInfoEl.appendChild(nameSpan); 
+    courseInfoEl.appendChild(progressSpan); 
+    courseInfoEl.appendChild(syllabusSpan); 
 
     courseListEl.appendChild(courseInfoEl); 
     courseListEl.appendChild(errorMessage); 
