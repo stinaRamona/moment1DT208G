@@ -627,17 +627,40 @@ function addNewCourse() {
     localStorage.setItem("courses", JSON.stringify(courses));
     printCourse(newCourse);
 }
+//Funktion som uppdaterar om kurs ändras. Har den innan printCourse så att den kan kallas på i den funktionen. 
+function updateCourse(element, field) {
+    //hämtar från local storage och uppdaterar om det finns något i local storage genom html elementet 
+    let courseInfoEl = element.closest("article");
+    if (courseInfoEl) {
+        let courseIndex = Array.from(courseListEl.children).indexOf(courseInfoEl);
+        if (courseIndex !== -1) {
+            let storedCourses = localStorage.getItem("courses");
+            if (storedCourses) {
+                let courses = JSON.parse(storedCourses);
+                courses[courseIndex][field] = element.textContent.trim(); // ! tystar om element.textContent inte är null
+                localStorage.setItem("courses", JSON.stringify(courses));
+            }
+        }
+    }
+}
 //skriver ut kurser till DOM
 function printCourse(course) {
     let courseInfoEl = document.createElement("article");
-    courseInfoEl.innerHTML = `
-    <p>Kurskod: <span contenteditable="true">${course.code}</span></p>
-    <p>Kursnamn: <span contenteditable="true">${course.name}</span></p>
-    <p>Progression: <span contenteditable="true">${course.progression}</span></p>
-    <p>Kursplan: <a contenteditable="true" href=${course.syllabus}>${course.syllabus}</a>
-    `;
+    let errorMessage = document.createElement("div");
+    /*Värdena som skrivs ut är ändringsbara med contenteditable. Med oninput så kallas 
+    på en function som heter update courses. Där sparas ändringar till local storage */ courseInfoEl.innerHTML = `
+    <p>Kurskod: <span contenteditable="true" oninput="updateCourse(this, 'code')">${course.code}</span></p>
+    <p>Kursnamn: <span contenteditable="true" oninput="updateCourse(this, 'name')">${course.name}</span></p>
+    <p>Progression: <span contenteditable="true" oninput="updateCourse(this, 'progression')">${course.progression}</span></p>
+    <p>Kursplan: <a contenteditable="true" href=${course.syllabus} oninput="updateCourse(this, 'syllabus')">${course.syllabus}</a>
+    <br>
+    <br>`;
+    //Ska bara kunna ändra till A, B eller C 
+    if (course.progression === "A" || course.progression === "B" || course.progression === "C") errorMessage.innerHTML = " ";
+    else errorMessage.innerHTML = "Var v\xe4nlig skriv i en giltig progression (A, B eller C)";
     courseListEl.appendChild(courseInfoEl);
-} //Uppdatera information om befintlig kurs | Både LocalStorage och Kurslistan 
+    courseListEl.appendChild(errorMessage);
+}
 
 },{}]},["3L0Bc","hYrgI"], "hYrgI", "parcelRequirefa22")
 
