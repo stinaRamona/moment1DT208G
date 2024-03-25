@@ -66,24 +66,6 @@ function addNewCourse() {
 
 } 
 
-//Funktion som uppdaterar om kurs ändras. Har den innan printCourse så att den kan kallas på i den funktionen. 
-function updateCourse(element: HTMLElement, field:string): void{
-    //hämtar från local storage och uppdaterar om det finns något i local storage genom html elementet 
-    let courseInfoEl = element.closest("article");
-    
-    if (courseInfoEl) {
-        let courseIndex = Array.from(courseListEl.children).indexOf(courseInfoEl);
-        if (courseIndex !== -1) {
-            let storedCourses = localStorage.getItem("courses");
-            if (storedCourses) {
-                let courses: courseInfo[] = JSON.parse(storedCourses);
-                courses[courseIndex][field] = element.textContent!.trim(); // ! tystar om element.textContent inte är null
-                localStorage.setItem("courses", JSON.stringify(courses));
-            }
-        }
-    }
-}
-
 //skriver ut kurser till DOM
 function printCourse(course: courseInfo): void{ 
     
@@ -93,33 +75,37 @@ function printCourse(course: courseInfo): void{
     /*Värdena som skrivs ut är ändringsbara med contenteditable. Med oninput så kallas 
     på en function som heter update courses. Där sparas ändringar till local storage */
 
-    let codeSpan = document.createElement("span");
+    let codeSpan = document.createElement("span"); //testar utan Namn: osv framför men är lite rörigt 
     codeSpan.contentEditable = "true";
-    codeSpan.textContent = "Kurskod:" + course.code;
+    codeSpan.textContent = course.code;
     codeSpan.addEventListener("input", function() {
         updateCourse(this, 'code');
-    }); 
+    });
+    codeSpan.appendChild(document.createElement("br"))
 
     let nameSpan = document.createElement("span"); 
     nameSpan.contentEditable = "true"; 
-    nameSpan.textContent= "Namn:" + course.name;
+    nameSpan.textContent= course.name;
     nameSpan.addEventListener("input", function() {
         updateCourse(this, 'name'); 
     })
+    nameSpan.appendChild(document.createElement("br")); 
 
     let progressSpan = document.createElement("span"); 
     progressSpan.contentEditable = "true"; 
-    progressSpan.textContent = "Progression: " + course.progression; 
+    progressSpan.textContent = course.progression; 
     progressSpan.addEventListener("input", function() {
         updateCourse(this, 'progression'); 
-    }) 
+    })
+    progressSpan.appendChild(document.createElement("br")); 
 
     let syllabusSpan = document.createElement("span"); 
     syllabusSpan.contentEditable = "true"; 
-    syllabusSpan.textContent = "Kursplan: " + course.syllabus; 
+    syllabusSpan.textContent = course.syllabus; 
     syllabusSpan.addEventListener("input", function() {
         updateCourse(this, 'syllabus'); 
     })
+    syllabusSpan.appendChild(document.createElement("br")); 
 
     //Ska bara kunna ändra till A, B eller C 
     if(course.progression === "A" || course.progression === "B" || course.progression === "C") {
@@ -128,12 +114,62 @@ function printCourse(course: courseInfo): void{
         errorMessage.innerHTML = "Var vänlig skriv i en giltig progression (A, B eller C)";
     }
 
-    courseInfoEl.appendChild(codeSpan); 
+    courseInfoEl.appendChild(codeSpan);
     courseInfoEl.appendChild(nameSpan); 
     courseInfoEl.appendChild(progressSpan); 
-    courseInfoEl.appendChild(syllabusSpan); 
+    courseInfoEl.appendChild(syllabusSpan);
+    courseInfoEl.appendChild(document.createElement("br")); 
 
     courseListEl.appendChild(courseInfoEl); 
     courseListEl.appendChild(errorMessage); 
+    courseListEl.appendChild(document.createElement("br")); 
 
 } 
+
+function updateCourse(element: HTMLElement, field: string): void {
+    // Hitta närmaste article-elementet som innehåller alla spans för kursinformation
+    let courseInfoEl = element.closest("article");
+
+    if (courseInfoEl) {
+        // Hitta spans som innehåller kursinformationen
+        let spans = courseInfoEl.querySelectorAll("span");
+
+        // Skapa ett objekt för den uppdaterade kursen
+        let updatedCourse: Partial<courseInfo> = {};
+
+        // Fyll objektet med uppdaterad information baserat på varje spans position
+        spans.forEach((span, index) => {
+            switch (index) {
+                case 0:
+                    updatedCourse.code = span.textContent!;
+                    break;
+                case 1:
+                    updatedCourse.name = span.textContent!;
+                    break;
+                case 2:
+                    updatedCourse.progression = span.textContent!;
+                    break;
+                case 3:
+                    updatedCourse.syllabus = span.textContent!;
+                    break;
+            }
+        });
+
+        // Hämta lagrade kurser från local storage
+        let storedCourses = localStorage.getItem("courses");
+
+        // Kontrollera om det finns sparade kurser
+        if (storedCourses) {
+            let courses: courseInfo[] = JSON.parse(storedCourses);
+
+            // Hitta index för den aktuella kursen i listan
+            let courseIndex = courses.findIndex(course => course.code === updatedCourse.code);
+
+            // Uppdatera kursen om den finns i listan
+            if (courseIndex !== -1) {
+                courses[courseIndex] = { ...courses[courseIndex], ...updatedCourse };
+                localStorage.setItem("courses", JSON.stringify(courses));
+            }
+        }
+    }
+}
