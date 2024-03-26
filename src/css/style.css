@@ -1,0 +1,16 @@
+body {
+    max-width:400px; 
+    margin: 0 auto; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#courseList{
+    background-color: rgba(0, 132, 255, 0.329);
+    padding:3%; 
+    border-radius:4px; 
+    margin-bottom: 5px;
+} 
+
+h1, h2, #courseForm {
+    padding:3%; 
+}

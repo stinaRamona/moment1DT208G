@@ -632,7 +632,7 @@ function printCourse(course) {
     let courseInfoEl = document.createElement("article");
     let errorMessage = document.createElement("div");
     /*Värdena som skrivs ut är ändringsbara med contenteditable. Med oninput så kallas 
-    på en function som heter update courses. Där sparas ändringar till local storage */ let codeSpan = document.createElement("span"); //testar utan Namn: osv framför men är lite rörigt 
+    på en function som heter update courses. Där sparas ändringar till local storage */ let codeSpan = document.createElement("span");
     codeSpan.contentEditable = "true";
     codeSpan.textContent = course.code;
     codeSpan.addEventListener("input", function() {

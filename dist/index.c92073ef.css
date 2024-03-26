@@ -1,0 +1,17 @@
+body {
+  max-width: 400px;
+  margin: 0 auto;
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#courseList {
+  background-color: #0084ff54;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  padding: 3%;
+}
+
+h1, h2, #courseForm {
+  padding: 3%;
+}
+/*# sourceMappingURL=index.c92073ef.css.map */
