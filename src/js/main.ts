@@ -123,11 +123,6 @@ function printCourse(course: courseInfo): void{
         errorMessage.innerHTML = "Var vänlig skriv i en giltig progression (A, B eller C)";
     }
 
-    //Kurskoden ska vara unik 
-    if(course.code === course.code){
-        errorMessage.innerHTML = "Kurskoden måste vara unik!"
-    }
-
     courseInfoEl.appendChild(codeSpan);
     courseInfoEl.appendChild(nameSpan); 
     courseInfoEl.appendChild(progressSpan); 
