@@ -1,4 +1,5 @@
 body {
+  background-color: beige;
   max-width: 400px;
   margin: 0 auto;
   font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
@@ -9,9 +10,36 @@ body {
   border-radius: 4px;
   margin-bottom: 5px;
   padding: 3%;
+  font-size: 1.25em;
 }
 
 h1, h2, #courseForm {
   padding: 3%;
+}
+
+button {
+  color: #fff;
+  background-color: #0056a7;
+  border-radius: 4px;
+  padding: 1%;
+  font-size: 1em;
+  box-shadow: 2px 2px gray;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #003566;
+}
+
+#courseCode, #courseName, #courseSyllabus {
+  border-radius: 4px;
+  width: 70%;
+  padding: 2%;
+  box-shadow: 2px 2px gray;
+}
+
+label {
+  font-size: 1.25em;
+  font-weight: bold;
 }
 /*# sourceMappingURL=index.c92073ef.css.map */

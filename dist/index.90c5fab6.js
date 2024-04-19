@@ -622,6 +622,13 @@ function addNewCourse() {
     let courses = [];
     //om det finns kurser sparade laddas de in i arrayen 
     if (storedCourses) courses = JSON.parse(storedCourses);
+    //kolla så att inte kurskoden redan finns
+    let isDuplicate = courses.some((course)=>course.code === newCourse.code);
+    if (isDuplicate) {
+        // Om kurskoden redan finns, visa felmeddelande och avsluta funktionen
+        alert("Kurskoden finns redan i listan!");
+        return;
+    }
     courses.push(newCourse);
     // Spara arrayen med alla kurser till local storage
     localStorage.setItem("courses", JSON.stringify(courses));
@@ -663,6 +670,8 @@ function printCourse(course) {
     //Ska bara kunna ändra till A, B eller C 
     if (course.progression === "A" || course.progression === "B" || course.progression === "C") errorMessage.innerHTML = " ";
     else errorMessage.innerHTML = "Var v\xe4nlig skriv i en giltig progression (A, B eller C)";
+    //Kurskoden ska vara unik 
+    if (course.code === course.code) errorMessage.innerHTML = "Kurskoden m\xe5ste vara unik!";
     courseInfoEl.appendChild(codeSpan);
     courseInfoEl.appendChild(nameSpan);
     courseInfoEl.appendChild(progressSpan);

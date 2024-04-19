@@ -57,6 +57,15 @@ function addNewCourse() {
         courses = JSON.parse(storedCourses);
     }
 
+    //kolla så att inte kurskoden redan finns
+    let isDuplicate = courses.some(course => course.code === newCourse.code);
+
+    if (isDuplicate) {
+        // Om kurskoden redan finns, visa felmeddelande och avsluta funktionen
+        alert("Kurskoden finns redan i listan!");
+        return;
+    }
+
     courses.push(newCourse);
 
     // Spara arrayen med alla kurser till local storage
@@ -112,6 +121,11 @@ function printCourse(course: courseInfo): void{
         errorMessage.innerHTML = " "; 
     } else {
         errorMessage.innerHTML = "Var vänlig skriv i en giltig progression (A, B eller C)";
+    }
+
+    //Kurskoden ska vara unik 
+    if(course.code === course.code){
+        errorMessage.innerHTML = "Kurskoden måste vara unik!"
     }
 
     courseInfoEl.appendChild(codeSpan);
